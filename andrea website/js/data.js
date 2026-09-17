@@ -20,10 +20,10 @@ window.FALLBACK_PROJECTS = [
       { type: "image", src: "https://picsum.photos/seed/lltrain3/1400/1050" }
     ],
     outtakes: [
-      { type: "image", src: "https://picsum.photos/seed/lltrainout1/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/lltrainout2/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/lltrainout3/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/lltrainout4/900/1350" }
+      { type: "image", src: "https://picsum.photos/seed/lltrainout1/900/1350", orientation: "portrait" },
+      { type: "image", src: "https://picsum.photos/seed/lltrainout2/1350/900", orientation: "landscape" },
+      { type: "image", src: "https://picsum.photos/seed/lltrainout3/1100/1100", orientation: "square" },
+      { type: "video", src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", orientation: "portrait" }
     ]
   },
   {
@@ -43,10 +43,10 @@ window.FALLBACK_PROJECTS = [
       { type: "video", src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4", poster: "https://picsum.photos/seed/llyoga3/1400/1050" }
     ],
     outtakes: [
-      { type: "image", src: "https://picsum.photos/seed/llyogaout1/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/llyogaout2/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/llyogaout3/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/llyogaout4/900/1350" }
+      { type: "image", src: "https://picsum.photos/seed/llyogaout1/900/1350", orientation: "portrait" },
+      { type: "image", src: "https://picsum.photos/seed/llyogaout2/1350/900", orientation: "landscape" },
+      { type: "video", src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", orientation: "landscape" },
+      { type: "image", src: "https://picsum.photos/seed/llyogaout4/1100/1100", orientation: "square" }
     ]
   },
   {
@@ -65,10 +65,10 @@ window.FALLBACK_PROJECTS = [
       { type: "image", src: "https://picsum.photos/seed/nikerun2/1400/1050" }
     ],
     outtakes: [
-      { type: "image", src: "https://picsum.photos/seed/nikerunout1/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/nikerunout2/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/nikerunout3/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/nikerunout4/900/1350" }
+      { type: "image", src: "https://picsum.photos/seed/nikerunout1/1100/1100", orientation: "square" },
+      { type: "image", src: "https://picsum.photos/seed/nikerunout2/900/1350", orientation: "portrait" },
+      { type: "image", src: "https://picsum.photos/seed/nikerunout3/1350/900", orientation: "landscape" },
+      { type: "video", src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", orientation: "portrait" }
     ]
   },
   {
@@ -87,10 +87,10 @@ window.FALLBACK_PROJECTS = [
       { type: "video", src: "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4", poster: "https://picsum.photos/seed/nikestudio2/1400/1050" }
     ],
     outtakes: [
-      { type: "image", src: "https://picsum.photos/seed/nikestudioout1/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/nikestudioout2/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/nikestudioout3/900/1350" },
-      { type: "image", src: "https://picsum.photos/seed/nikestudioout4/900/1350" }
+      { type: "image", src: "https://picsum.photos/seed/nikestudioout1/900/1350", orientation: "portrait" },
+      { type: "video", src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4", orientation: "landscape" },
+      { type: "image", src: "https://picsum.photos/seed/nikestudioout3/1100/1100", orientation: "square" },
+      { type: "image", src: "https://picsum.photos/seed/nikestudioout4/1350/900", orientation: "landscape" }
     ]
   }
 ];

@@ -381,10 +381,14 @@ function buildHeroMediaElement(media, altText) {
 
   video.addEventListener("play", () => {
     playButton.style.display = "none";
+    // On mobile, a playing hero video takes over the space the
+    // description/credits used, instead of staying pinned to its 16:9 box.
+    document.body.classList.add("hero-playing");
   });
 
   video.addEventListener("pause", () => {
     playButton.style.display = "";
+    document.body.classList.remove("hero-playing");
   });
 
   block.appendChild(video);
