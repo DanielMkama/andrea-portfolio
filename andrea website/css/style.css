@@ -345,6 +345,85 @@ body.has-slides {
   color: var(--muted);
 }
 
+.project-outtakes-wrap {
+  margin-top: 48px;
+}
+
+.project-outtakes-heading {
+  margin: 0 0 24px;
+  padding: 0 var(--header-footer-pad);
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+/* Horizontally scrolling row of full portrait cards - same card
+   treatment (crop, gap) the Photography grid uses, just scoped to one
+   project instead of the whole photo library. */
+.project-outtakes {
+  display: flex;
+  gap: 8px;
+  padding: 0 var(--header-footer-pad);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.project-outtakes::-webkit-scrollbar {
+  display: none;
+}
+
+.project-outtake {
+  flex-shrink: 0;
+  width: 260px;
+  aspect-ratio: 2 / 3;
+  background: #f2f2f2;
+  overflow: hidden;
+}
+
+.project-outtake img,
+.project-outtake video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-related-wrap {
+  margin-top: 48px;
+}
+
+.project-related-heading {
+  margin: 0 0 24px;
+  padding: 0 var(--header-footer-pad);
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.project-related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px 24px;
+  padding: 0 var(--header-footer-pad);
+}
+
+.project-related-grid a {
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: #f2f2f2;
+  overflow: hidden;
+}
+
+.project-related-grid img,
+.project-related-grid video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 /* Photography page - edge-to-edge black gallery grid */
 
 body.page-photography {
@@ -632,6 +711,15 @@ body.page-info .site-header {
 
   .project-title {
     max-width: 45vw;
+  }
+
+  .project-outtake {
+    width: 160px;
+  }
+
+  .project-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 12px;
   }
 
   .project-info {

@@ -272,6 +272,45 @@ function buildThumbnailElement(media, altText) {
       castEl.remove();
     }
   }
+
+  const outtakesWrap = document.getElementById("projectOuttakesWrap");
+  const outtakesTrack = document.getElementById("projectOuttakes");
+  if (outtakesWrap && outtakesTrack) {
+    const outtakes = project.outtakes || [];
+    if (outtakes.length) {
+      outtakes.forEach((item) => {
+        const cell = document.createElement("div");
+        cell.className = "project-outtake";
+        cell.appendChild(buildThumbnailElement(item, project.name));
+        outtakesTrack.appendChild(cell);
+      });
+      outtakesWrap.hidden = false;
+    } else {
+      outtakesWrap.remove();
+    }
+  }
+
+  // Index - every other project, so someone can jump straight from this
+  // case study into any of the others. "Index" here is a plain label
+  // (unlike the footer's own Index link), not a link itself.
+  const relatedWrap = document.getElementById("projectRelatedWrap");
+  const relatedGrid = document.getElementById("projectRelatedGrid");
+  if (relatedWrap && relatedGrid) {
+    const others = projects.filter((p) => p.slug !== project.slug);
+    if (others.length) {
+      others.forEach((other) => {
+        const a = document.createElement("a");
+        a.href = "project.html?slug=" + encodeURIComponent(other.slug);
+        a.title = other.name;
+        const firstMedia = (other.media || [])[0];
+        if (firstMedia) a.appendChild(buildThumbnailElement(firstMedia, other.name));
+        relatedGrid.appendChild(a);
+      });
+      relatedWrap.hidden = false;
+    } else {
+      relatedWrap.remove();
+    }
+  }
 })();
 
 // Hero media for the project page. Images/embeds render plainly; an

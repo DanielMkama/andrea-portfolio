@@ -32,6 +32,10 @@ window.loadProjects = (function () {
       _type == "videoUrl" => {
         url
       }
+    },
+    outtakes[] {
+      "url": asset->url,
+      "alt": title
     }
   }`;
 
@@ -111,7 +115,10 @@ window.loadProjects = (function () {
       cast: doc.cast || "",
       media: (doc.media || [])
         .map((item) => mapMedia(item, doc.title))
-        .filter(Boolean)
+        .filter(Boolean),
+      outtakes: (doc.outtakes || [])
+        .filter((item) => item.url)
+        .map((item) => ({ type: "image", src: item.url, alt: item.alt || doc.title }))
     }));
   }
 
