@@ -5,7 +5,7 @@ window.FALLBACK_PROJECTS = [
   {
     slug: "lululemon-train",
     name: "Lululemon – Train",
-    description: "A director's cut about putting the product back into its actual world, not a studio recreation of one. The kit was built for a real session, so we shot it during one: same gym, same team, same fatigue by the end. Nothing about a training piece should look rested. We built the edit around the parts most footage cuts around, the pause before the last set, the look between reps, the moment someone stops performing for the camera and just finishes the workout. No countdown clock, no finish line. Just the work itself, and what it actually looks like when nobody's posing for it.",
+    description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
     role: "Director, Editor",
     credits: [
       { role: "DP", name: "Jesse Bronstein" },
@@ -29,7 +29,7 @@ window.FALLBACK_PROJECTS = [
   {
     slug: "lululemon-yoga",
     name: "Lululemon – Yoga",
-    description: "A quiet, unhurried look at practice rather than performance. Most yoga content is shot like a highlight reel, the deepest stretch, the cleanest line, the pose held just long enough for the camera. We wanted the opposite: the wobble before balance, the exhale that isn't flattering, the fifteen minutes of a session where nothing photogenic happens at all. One participant, one mat, one uncut early-morning hour, shot as it actually unfolded rather than restaged for coverage. The stillness in the final edit is real stillness, not a pause we manufactured after the fact.",
+    description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
     role: "Director, Editor",
     credits: [
       { role: "DP", name: "Pierce Townsend" },
@@ -51,7 +51,7 @@ window.FALLBACK_PROJECTS = [
   {
     slug: "nike-run",
     name: "Nike – Run",
-    description: "A film about the fifteen minutes before a run actually starts, the group chat that turns into a group, the small talk in the parking lot, the reluctant first quarter mile before anyone finds their pace. We followed an existing running crew at dawn instead of casting one, so the pack behavior, the pacing, the jokes between people who train together every week, all of it is unscripted. No finish-line shot. The film ends mid-stride, because that's where the run actually was when we stopped filming, not when the story felt done.",
+    description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
     role: "Director, Editor",
     credits: [
       { role: "DP", name: "Jesse Bronstein" },
@@ -72,7 +72,7 @@ window.FALLBACK_PROJECTS = [
   {
     slug: "nike-studio",
     name: "Nike – Studio",
-    description: "The deliberate counterpoint to the run piece: everything the road film wasn't, controlled, still, indoors. Where that one was about momentum, this one is about the object itself, the weight of the fabric, the way the material sits under studio light without anyone moving through it. We built the set to disappear rather than announce itself, letting the product hold the frame without a body to distract from it. It's a quieter film by design, meant to be looked at rather than watched, closer to a held breath than a scene.",
+    description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
     role: "Director, Editor",
     credits: [
       { role: "Photo", name: "Pierce Townsend" },
