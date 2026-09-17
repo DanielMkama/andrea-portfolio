@@ -362,21 +362,20 @@ body.page-photography .counter {
   color: #fff;
 }
 
-/* Desktop: a "justified" gallery - each image keeps its own aspect ratio
-   at a shared row height, and flex-grow stretches every row to fill the
-   full width exactly, the way Flickr/Google Photos lay out mixed-ratio
-   photos without cropping to a rigid grid. */
+/* Desktop: a fixed 8-column grid - every cell shares the same portrait
+   aspect ratio regardless of the source photo's own orientation, cropped
+   to fit via object-fit: cover, so 16 photos fill exactly two full rows
+   with no scrolling needed to see all of them. */
 .photo-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 24px;
   background: #000;
-  padding: var(--bar-height) 0;
+  padding: calc(var(--bar-height) + 24px) 24px;
 }
 
 .photo-grid a {
-  height: 230px;
-  flex-grow: 1;
+  aspect-ratio: 2 / 3;
   display: block;
 }
 
@@ -498,16 +497,16 @@ body.page-info .site-header {
 }
 
 .info-bio {
-  max-width: 900px;
-  font-family: 'Untitled Serif', Georgia, 'Times New Roman', Times, serif;
+  max-width: 560px;
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
-  font-size: 28px;
-  line-height: 36px;
+  font-size: 14px;
+  line-height: 18px;
   color: rgb(0, 0, 0);
 }
 
 .info-bio p {
-  margin: 0 0 24px;
+  margin: 0 0 12px;
 }
 
 .info-bio p:last-child {
@@ -598,6 +597,7 @@ body.page-info .site-header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
+    padding: var(--bar-height) 0;
   }
 
   .photo-grid a {
@@ -618,11 +618,6 @@ body.page-info .site-header {
     justify-content: flex-start;
     padding: 96px 16px 0;
     gap: 24px;
-  }
-
-  .info-bio {
-    font-size: 19px;
-    line-height: 26px;
   }
 
   .info-footer {
