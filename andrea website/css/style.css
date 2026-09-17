@@ -977,4 +977,9 @@ body.page-info .site-name {
     flex-shrink: 0;
     padding: 12px 16px 32px;
   }
+
+  .info-book-wrap {
+    display: block;
+    margin-top: 4px;
+  }
 }
