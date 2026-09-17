@@ -13,6 +13,7 @@ window.FALLBACK_PROJECTS = [
       { role: "Color", name: "Juliana Ronderos" },
       { role: "Brand", name: "Lululemon" }
     ],
+    cast: "Sam Rivera and Priya Nair",
     media: [
       { type: "video", src: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", poster: "https://picsum.photos/seed/lltrain1/1400/1050" },
       { type: "video", src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4", poster: "https://picsum.photos/seed/lltrain2/1400/1050" },

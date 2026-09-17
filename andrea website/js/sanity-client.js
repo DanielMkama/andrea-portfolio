@@ -19,6 +19,7 @@ window.loadProjects = (function () {
     description,
     role,
     credits[]{ role, name },
+    cast,
     media[] {
       _type,
       _type == "image" => {
@@ -107,6 +108,7 @@ window.loadProjects = (function () {
       description: doc.description || "",
       role: doc.role || "",
       credits: doc.credits || [],
+      cast: doc.cast || "",
       media: (doc.media || [])
         .map((item) => mapMedia(item, doc.title))
         .filter(Boolean)

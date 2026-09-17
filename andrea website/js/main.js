@@ -173,7 +173,7 @@ function buildThumbnailElement(media, altText) {
 })();
 
 // Index page - a grid of every slide's thumbnail, linking straight into
-// that point in the home slider.
+// that project's own page.
 (async function () {
   const grid = document.getElementById("archiveGrid");
   if (!grid || typeof window.loadProjects !== "function") return;
@@ -181,13 +181,13 @@ function buildThumbnailElement(media, altText) {
   const projects = await window.loadProjects();
   const slides = buildSlides(projects);
 
-  slides.forEach((slide, index) => {
+  slides.forEach((slide) => {
     const li = document.createElement("li");
     li.className = "archive-cell";
 
     const a = document.createElement("a");
     a.className = "archive-thumb";
-    a.href = "index.html#" + index;
+    a.href = "project.html?slug=" + encodeURIComponent(slide.project.slug);
     a.title = slide.project.name;
 
     a.appendChild(buildThumbnailElement(slide.media, slide.project.name));
@@ -258,9 +258,18 @@ function buildThumbnailElement(media, altText) {
   if (creditsEl) {
     const credits = project.credits || [];
     if (credits.length) {
-      creditsEl.textContent = credits.map((c) => `${c.role}: ${c.name}`).join(", ");
+      creditsEl.textContent = credits.map((c) => `${c.role}: ${c.name}`).join(", ") + ",";
     } else {
       creditsEl.remove();
+    }
+  }
+
+  const castEl = document.getElementById("projectCast");
+  if (castEl) {
+    if (project.cast) {
+      castEl.textContent = "Starring: " + project.cast;
+    } else {
+      castEl.remove();
     }
   }
 })();

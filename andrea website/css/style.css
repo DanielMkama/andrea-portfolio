@@ -249,23 +249,27 @@ body.has-slides {
   margin-bottom: 12px;
 }
 
+/* A fixed aspect ratio on the block itself (rather than sizing from the
+   media's own intrinsic dimensions) means the hero always reserves a
+   correct full-width box immediately - regardless of whether the video is
+   still loading, slow, or fails outright, none of which should collapse
+   or distort the layout. */
 .project-block {
   width: 100%;
+  aspect-ratio: 16 / 9;
   line-height: 0;
   position: relative;
+  background: #000;
 }
 
 .project-block img,
 .project-block video,
 .project-block iframe {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   border: 0;
-}
-
-.project-block iframe {
-  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .project-play {
@@ -308,16 +312,23 @@ body.has-slides {
 }
 
 .project-info {
+  display: grid;
+  grid-template-columns: minmax(220px, 340px) minmax(140px, 220px) 1fr;
+  gap: 40px;
   padding: 0 var(--header-footer-pad);
-  max-width: 640px;
   font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: 18px;
+  color: rgb(0, 0, 0);
 }
 
 .project-info p {
   margin: 0 0 20px;
+}
+
+.project-info p:last-child {
+  margin-bottom: 0;
 }
 
 .project-info p:empty {
@@ -367,19 +378,6 @@ body.page-info .site-header {
   margin-bottom: 0;
 }
 
-/* Mobile-only - see the mobile media query below for sizing/visibility */
-.info-photo-strip {
-  display: none;
-}
-
-.info-photo-strip img {
-  flex: 1 1 0;
-  width: 0;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .info-footer {
   flex-shrink: 0;
   display: flex;
@@ -418,6 +416,11 @@ body.page-info .site-header {
     max-width: 45vw;
   }
 
+  .project-info {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
   .slide-media img,
   .slide-media video {
     max-width: min(92vw, 400px);
@@ -444,14 +447,6 @@ body.page-info .site-header {
     margin-bottom: 14px;
   }
 
-  .info-photo-strip {
-    display: flex;
-    gap: 3px;
-    background: #000;
-    width: 100%;
-    aspect-ratio: 3.5 / 1;
-  }
-
   .info-footer {
     flex-wrap: wrap;
     row-gap: 6px;
@@ -459,24 +454,5 @@ body.page-info .site-header {
 
   .info-clients {
     flex-basis: 100%;
-  }
-
-  /* Content (bio + photo strip + full client list) can be taller than a
-     small phone's viewport. The shared `html, body { height: 100% }` rule
-     above pins body to exactly one viewport tall, so overflow:hidden was
-     clipping anything past that regardless of min-height. Switching to
-     height: auto removes the fixed box entirely - body genuinely grows
-     with its content, min-height keeps it filling the screen when content
-     is short (pushing the footer down, the gap in the reference shot),
-     and it scrolls normally rather than clipping when content is tall. */
-  body.page-info {
-    height: auto;
-    min-height: 100vh;
-    overflow: visible;
-  }
-
-  .info-main {
-    min-height: auto;
-    overflow: visible;
   }
 }
