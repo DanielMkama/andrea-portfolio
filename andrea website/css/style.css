@@ -716,15 +716,18 @@ body.page-info {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: blur(20px) brightness(0.55);
-  transform: scale(1.2);
+  filter: blur(20px) brightness(0.8);
+  /* Scaled up well past the blur radius so the blur's faded-to-nothing
+     edge falls outside the visible cell instead of showing as a dark
+     seam between tiles. */
+  transform: scale(1.5);
 }
 
 .info-bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 body.page-info .site-header {
