@@ -421,6 +421,30 @@ function buildHeroMediaElement(media, altText) {
   }
 })();
 
+// Info page email - clicking it copies the address instead of opening a
+// mail client. A tooltip reads "Click to copy" on hover and flips to
+// "Copied!" (staying visible even without a hover) right after clicking.
+(function () {
+  const btn = document.getElementById("infoEmail");
+  const tooltip = document.getElementById("infoEmailTooltip");
+  if (!btn || !tooltip) return;
+
+  const email = btn.dataset.email || btn.textContent.trim();
+  let resetTimer = null;
+
+  btn.addEventListener("click", () => {
+    navigator.clipboard.writeText(email).then(() => {
+      clearTimeout(resetTimer);
+      tooltip.textContent = "Copied!";
+      tooltip.classList.add("is-visible");
+      resetTimer = setTimeout(() => {
+        tooltip.classList.remove("is-visible");
+        tooltip.textContent = "Click to copy";
+      }, 1500);
+    }).catch(() => {});
+  });
+})();
+
 // Photography page - a flat grid of standalone photos. Clicking one plays
 // a FLIP transition into an enlarged, centered view of that same photo
 // (see the CSS for .photo-flip-viewer) instead of navigating away.
