@@ -66,3 +66,24 @@ window.FALLBACK_PROJECTS = [
     ]
   }
 ];
+
+// Demo photos for the Photography page - mixed landscape/portrait aspect
+// ratios so the justified grid lays out realistically.
+window.FALLBACK_PHOTOS = [
+  "https://picsum.photos/seed/photo01/1200/800",
+  "https://picsum.photos/seed/photo02/900/1200",
+  "https://picsum.photos/seed/photo03/1200/900",
+  "https://picsum.photos/seed/photo04/1000/1300",
+  "https://picsum.photos/seed/photo05/1300/900",
+  "https://picsum.photos/seed/photo06/950/1250",
+  "https://picsum.photos/seed/photo07/1200/850",
+  "https://picsum.photos/seed/photo08/1100/1400",
+  "https://picsum.photos/seed/photo09/1250/900",
+  "https://picsum.photos/seed/photo10/900/1150",
+  "https://picsum.photos/seed/photo11/1300/950",
+  "https://picsum.photos/seed/photo12/1000/1300",
+  "https://picsum.photos/seed/photo13/1200/800",
+  "https://picsum.photos/seed/photo14/950/1250",
+  "https://picsum.photos/seed/photo15/1250/900",
+  "https://picsum.photos/seed/photo16/1000/1300"
+];

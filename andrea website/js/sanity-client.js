@@ -127,3 +127,35 @@ window.loadProjects = (function () {
     return window.FALLBACK_PROJECTS || [];
   };
 })();
+
+// Photography page - a flat, ordered list of standalone photos (separate
+// from the video/case-study "project" documents above).
+window.loadPhotos = (function () {
+  const config = window.SANITY_CONFIG || {};
+  const isConfigured = config.projectId && config.projectId !== "YOUR_PROJECT_ID";
+
+  const QUERY = `*[_type == "photo"] | order(order asc) {
+    _id,
+    "url": image.asset->url
+  }`;
+
+  async function fetchFromSanity() {
+    const url = `https://${config.projectId}.api.sanity.io/v${config.apiVersion || "2024-01-01"}/data/query/${config.dataset || "production"}?query=${encodeURIComponent(QUERY)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Sanity request failed: " + res.status);
+    const json = await res.json();
+    return (json.result || []).filter((doc) => doc.url).map((doc) => doc.url);
+  }
+
+  return async function loadPhotos() {
+    if (isConfigured) {
+      try {
+        const photos = await fetchFromSanity();
+        if (photos.length) return photos;
+      } catch (err) {
+        console.warn("Sanity fetch failed, using demo photos instead:", err);
+      }
+    }
+    return window.FALLBACK_PHOTOS || [];
+  };
+})();

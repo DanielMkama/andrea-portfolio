@@ -74,6 +74,12 @@ a {
   color: rgb(0, 0, 0);
 }
 
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .footer-left {
   display: flex;
   align-items: baseline;
@@ -339,26 +345,70 @@ body.has-slides {
   color: var(--muted);
 }
 
+/* Photography page - edge-to-edge black gallery grid */
+
+body.page-photography {
+  background: #000;
+}
+
+body.page-photography .site-header,
+body.page-photography .site-footer {
+  background: transparent;
+  color: #fff;
+}
+
+body.page-photography .site-name,
+body.page-photography .counter {
+  color: #fff;
+}
+
+/* Desktop: a "justified" gallery - each image keeps its own aspect ratio
+   at a shared row height, and flex-grow stretches every row to fill the
+   full width exactly, the way Flickr/Google Photos lay out mixed-ratio
+   photos without cropping to a rigid grid. */
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: #000;
+  padding: var(--bar-height) 0;
+}
+
+.photo-grid img {
+  height: 300px;
+  flex-grow: 1;
+  object-fit: cover;
+  display: block;
+}
+
 /* Info page - full-bleed color, no scroll, serif bio */
 
 body.page-info {
   background: #e2503a;
-  overflow: hidden;
+  height: auto;
 }
 
 body.page-info .site-header {
   background: transparent;
 }
 
+/* min-height: auto (the flex default, not 0) means this item can't be
+   forced smaller than its content: it still stretches to fill leftover
+   space and push the footer down when content is short (the gap in the
+   reference), but real phones vary the visible viewport height as their
+   address bar shows/hides, so a hard clip sized to a single "100vh"
+   snapshot risks silently hiding content past whatever that happened to
+   be. Letting the box (and the page) genuinely grow with its content
+   means it only ever scrolls in that edge case, instead of hiding text
+   with no way to reach it. */
 .info-main {
   flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 32px;
-  padding: calc(164px - var(--bar-height)) var(--header-footer-pad) 0;
+  gap: 24px;
+  padding: 128px 211px 0;
 }
 
 .info-bio {
@@ -376,6 +426,19 @@ body.page-info .site-header {
 
 .info-bio p:last-child {
   margin-bottom: 0;
+}
+
+/* Mobile-only - see the mobile media query below for sizing/visibility */
+.info-photo-strip {
+  display: none;
+}
+
+.info-photo-strip img {
+  flex: 1 1 0;
+  width: 0;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .info-footer {
@@ -427,6 +490,18 @@ body.page-info .site-header {
     max-height: min(38vh, 420px);
   }
 
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .photo-grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+
   .archive-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 14px 12px;
@@ -434,8 +509,8 @@ body.page-info .site-header {
 
   .info-main {
     justify-content: flex-start;
-    padding-top: 20px;
-    gap: 16px;
+    padding: 96px 16px 0;
+    gap: 24px;
   }
 
   .info-bio {
@@ -443,8 +518,12 @@ body.page-info .site-header {
     line-height: 26px;
   }
 
-  .info-bio p {
-    margin-bottom: 14px;
+  .info-photo-strip {
+    display: flex;
+    gap: 3px;
+    background: #000;
+    width: 100%;
+    aspect-ratio: 3.5 / 1;
   }
 
   .info-footer {

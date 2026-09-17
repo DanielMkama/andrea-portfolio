@@ -318,3 +318,18 @@ function buildHeroMediaElement(media, altText) {
   block.appendChild(playButton);
   return block;
 }
+
+// Photography page - a flat justified/grid gallery of standalone photos.
+(async function () {
+  const grid = document.getElementById("photoGrid");
+  if (!grid || typeof window.loadPhotos !== "function") return;
+
+  const photos = await window.loadPhotos();
+  photos.forEach((src) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "";
+    img.loading = "lazy";
+    grid.appendChild(img);
+  });
+})();
