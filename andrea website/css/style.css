@@ -745,9 +745,9 @@ body.page-info .site-name {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 24px;
-  padding: 0 211px;
+  padding: 0 211px 48px;
 }
 
 .info-meta {
