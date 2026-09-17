@@ -380,6 +380,16 @@ function buildHeroMediaElement(media, altText) {
   return block;
 }
 
+// Info page - populate the biography from Sanity and fall back to the
+// demo copy when the API is unavailable or the document isn't configured.
+(async function () {
+  const bioWrap = document.getElementById("infoBio");
+  if (!bioWrap || typeof window.loadInfo !== "function") return;
+
+  const info = await window.loadInfo();
+  bioWrap.innerHTML = info.bioHtml || "";
+})();
+
 // Photography page - a flat grid of standalone photos. Clicking one plays
 // a FLIP transition into an enlarged, centered view of that same photo
 // (see the CSS for .photo-flip-viewer) instead of navigating away.
