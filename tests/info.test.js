@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 global.window = global;
 global.document = { createElement: () => ({}) };
 
-require('../andrea website/js/sanity-client.js');
+require('../andrea-website/js/sanity-client.js');
 
 test('normalizeInfoBio converts Sanity block content into paragraph HTML', () => {
   const input = [
