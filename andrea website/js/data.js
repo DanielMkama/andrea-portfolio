@@ -6,12 +6,12 @@ window.FALLBACK_PROJECTS = [
     slug: "lululemon-train",
     name: "Lululemon – Train",
     description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
-    role: "Director, Editor",
+    role: "Director",
     credits: [
-      { role: "DP", name: "Jesse Bronstein" },
-      { role: "Edit", name: "John Rains" },
-      { role: "Production Co", name: "Fieldwork" },
-      { role: "Color", name: "Juliana Ronderos" }
+      { role: "DP", name: "Severin Strauss" },
+      { role: "Edit", name: "Davy Gomez" },
+      { role: "Production Co", name: "Anorak" },
+      { role: "Editor", name: "Benno Schoppmann" }
     ],
     cast: "Sam Rivera and Priya Nair",
     media: [
@@ -30,11 +30,12 @@ window.FALLBACK_PROJECTS = [
     slug: "lululemon-yoga",
     name: "Lululemon – Yoga",
     description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
-    role: "Director, Editor",
+    role: "Director",
     credits: [
-      { role: "DP", name: "Pierce Townsend" },
-      { role: "Edit", name: "Chantelle Adams" },
-      { role: "Production Co", name: "Northline" }
+      { role: "DP", name: "Severin Strauss" },
+      { role: "Edit", name: "Davy Gomez" },
+      { role: "Production Co", name: "Anorak" },
+      { role: "Editor", name: "Benno Schoppmann" }
     ],
     media: [
       { type: "video", src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", poster: "https://picsum.photos/seed/llyoga1/1400/1050" },
@@ -52,11 +53,12 @@ window.FALLBACK_PROJECTS = [
     slug: "nike-run",
     name: "Nike – Run",
     description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
-    role: "Director, Editor",
+    role: "Director",
     credits: [
-      { role: "DP", name: "Jesse Bronstein" },
-      { role: "Edit", name: "Davy Solis" },
-      { role: "Production Co", name: "Fieldwork" }
+      { role: "DP", name: "Severin Strauss" },
+      { role: "Edit", name: "Davy Gomez" },
+      { role: "Production Co", name: "Anorak" },
+      { role: "Editor", name: "Benno Schoppmann" }
     ],
     media: [
       { type: "video", src: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", poster: "https://picsum.photos/seed/nikerun1/1400/1050" },
@@ -73,11 +75,12 @@ window.FALLBACK_PROJECTS = [
     slug: "nike-studio",
     name: "Nike – Studio",
     description: "A director's cut about reclaiming the joy of movement, not as a means to an end, but as the end itself. Somewhere along the way, fitness became synonymous with goals, as if you're either training for something or you're not serious. This piece pushes back on that, following real people across a full spectrum of movement: hiking, trail running, Pilates, strength training, capturing the individual and collective moments that make it all worth it, the small wins, the struggle, the laughter, the quiet perseverance. No finish lines. No metrics. Just people who've found something real in the simple act of moving their bodies.",
-    role: "Director, Editor",
+    role: "Director",
     credits: [
-      { role: "Photo", name: "Pierce Townsend" },
-      { role: "Art", name: "Chantelle Adams" },
-      { role: "Production Co", name: "Northline" }
+      { role: "DP", name: "Severin Strauss" },
+      { role: "Edit", name: "Davy Gomez" },
+      { role: "Production Co", name: "Anorak" },
+      { role: "Editor", name: "Benno Schoppmann" }
     ],
     media: [
       { type: "image", src: "https://picsum.photos/seed/nikestudio1/1400/1050" },

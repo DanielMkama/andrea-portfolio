@@ -258,7 +258,7 @@ function buildThumbnailElement(media, altText) {
   if (creditsEl) {
     const credits = project.credits || [];
     if (credits.length) {
-      creditsEl.textContent = credits.map((c) => `${c.role}: ${c.name}`).join(", ") + ",";
+      creditsEl.textContent = credits.map((c) => `${c.role}: ${c.name}`).join(", ");
     } else {
       creditsEl.remove();
     }
@@ -303,7 +303,19 @@ function buildThumbnailElement(media, altText) {
         a.href = "project.html?slug=" + encodeURIComponent(other.slug);
         a.title = other.name;
         const firstMedia = (other.media || [])[0];
-        if (firstMedia) a.appendChild(buildThumbnailElement(firstMedia, other.name));
+        if (firstMedia) {
+          const thumb = buildThumbnailElement(firstMedia, other.name);
+          a.appendChild(thumb);
+          // Video thumbnails preview muted on hover instead of sitting
+          // fully static like the image ones.
+          if (thumb.tagName === "VIDEO") {
+            a.addEventListener("mouseenter", () => thumb.play().catch(() => {}));
+            a.addEventListener("mouseleave", () => {
+              thumb.pause();
+              thumb.currentTime = 0.1;
+            });
+          }
+        }
         relatedGrid.appendChild(a);
       });
       relatedWrap.hidden = false;
@@ -340,9 +352,19 @@ function buildHeroMediaElement(media, altText) {
   playButton.setAttribute("aria-label", "Play video");
   playButton.innerHTML = '<svg viewBox="0 0 24 24" width="64" height="64"><path d="M8 5v14l11-7z" fill="white"/></svg>';
 
+  // No native controls - they render as an opaque bar on some browsers
+  // that eats into the video. Clicking the video itself (once playing)
+  // pauses it and brings the custom play button back instead.
   playButton.addEventListener("click", () => {
-    video.controls = true;
     video.play().catch(() => {});
+  });
+
+  video.addEventListener("click", () => {
+    if (video.paused) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
   });
 
   video.addEventListener("play", () => {
@@ -350,7 +372,7 @@ function buildHeroMediaElement(media, altText) {
   });
 
   video.addEventListener("pause", () => {
-    if (!video.ended) playButton.style.display = "";
+    playButton.style.display = "";
   });
 
   block.appendChild(video);

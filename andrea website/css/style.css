@@ -278,6 +278,10 @@ body.has-slides {
   object-fit: cover;
 }
 
+.project-video-block video {
+  cursor: pointer;
+}
+
 .project-play {
   position: absolute;
   top: 50%;
