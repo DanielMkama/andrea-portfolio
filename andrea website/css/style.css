@@ -388,13 +388,20 @@ body.page-photography .counter {
 
 /* Single-photo viewer - reached from Photography's "Index" link. Desktop:
    a scroll-snap slider (like the home page) showing one photo at a time as
-   a centered card, with a fixed top caption. Mobile: a plain continuous
-   scroll of full-width, edge-to-edge photos with a fixed bottom caption
-   (see the mobile media query below for both overrides). */
+   a centered card, with the photo's own heading/subheading + "Photography"
+   standing in for the usual site header. Mobile instead shows the normal
+   site header (Andrea + nav) up top, and switches to a plain continuous
+   scroll of full-width, edge-to-edge photos with the heading/subheading
+   caption fixed to the bottom (see the mobile media query below). */
 
 body.page-photo-viewer {
   background: #000;
   overflow: hidden;
+}
+
+/* The photo's own caption takes the header's place on desktop */
+body.page-photo-viewer .site-header {
+  display: none;
 }
 
 .photo-caption {
@@ -432,9 +439,21 @@ body.page-photo-viewer {
   color: var(--muted);
 }
 
-.photo-caption .photography-link {
+.photo-caption .photo-close {
   color: #fff;
   flex-shrink: 0;
+}
+
+.photo-counter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 22px var(--header-footer-pad);
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #fff;
 }
 
 .photo-slides {
@@ -479,6 +498,11 @@ body.page-photo-viewer {
 body.page-info {
   background: #e2503a;
   overflow: hidden;
+  /* dvh tracks the real, currently-visible viewport - unlike the static
+     height:100% inherited above, it shrinks when a phone's address bar is
+     showing, so this box never clips content the address bar is hiding.
+     Browsers without dvh support just keep the 100% fallback above. */
+  height: 100dvh;
 }
 
 body.page-info .site-header {
@@ -566,10 +590,33 @@ body.page-info .site-header {
     overflow: visible;
   }
 
+  body.page-photo-viewer .site-header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: transparent;
+    color: #fff;
+  }
+
+  body.page-photo-viewer .site-name {
+    color: #fff;
+  }
+
   .photo-caption {
     top: auto;
     bottom: 0;
     background: rgba(0, 0, 0, 0.55);
+  }
+
+  .photo-caption .photo-close {
+    display: none;
+  }
+
+  .photo-counter {
+    display: none;
   }
 
   .photo-slides {
@@ -596,17 +643,17 @@ body.page-info .site-header {
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    gap: 4px;
     padding: var(--bar-height) 0;
   }
 
   .photo-grid a {
     height: auto;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 7 / 8;
   }
 
   .photo-grid img {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 7 / 8;
   }
 
   .archive-grid {

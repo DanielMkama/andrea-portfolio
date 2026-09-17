@@ -352,6 +352,7 @@ function buildHeroMediaElement(media, altText) {
 
   const headingEl = document.getElementById("photoHeading");
   const subheadingEl = document.getElementById("photoSubheading");
+  const counterEl = document.getElementById("photoCounter");
 
   const sections = photos.map((photo, index) => {
     const section = document.createElement("section");
@@ -371,6 +372,7 @@ function buildHeroMediaElement(media, altText) {
     const photo = photos[index];
     headingEl.textContent = photo.heading || "";
     subheadingEl.textContent = photo.subheading || "";
+    if (counterEl) counterEl.textContent = (index + 1) + "/" + photos.length;
     history.replaceState(null, "", "#" + index);
   }
 
