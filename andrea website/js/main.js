@@ -319,13 +319,28 @@ function buildHeroMediaElement(media, altText) {
   return block;
 }
 
-// Photography page - a flat justified/grid gallery of standalone photos.
+// Photography page - a flat grid of standalone photos. Clicking one plays
+// a FLIP transition into an enlarged, centered view of that same photo
+// (see the CSS for .photo-flip-viewer) instead of navigating away.
 (async function () {
   const grid = document.getElementById("photoGrid");
+  const viewer = document.getElementById("photoFlipViewer");
   if (!grid || typeof window.loadPhotos !== "function") return;
 
   const photos = await window.loadPhotos();
-  photos.forEach((photo, index) => {
+
+  const flipImage = document.getElementById("flipImage");
+  const headingEl = document.getElementById("flipHeading");
+  const subheadingEl = document.getElementById("flipSubheading");
+  const counterEl = document.getElementById("flipCounter");
+  const closeBtn = document.getElementById("flipClose");
+
+  const hasFlipUI = viewer && flipImage && headingEl && subheadingEl && closeBtn;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DURATION = 600;
+  const EASING = "cubic-bezier(0.65, 0, 0.35, 1)";
+
+  const cells = photos.map((photo, index) => {
     const a = document.createElement("a");
     a.href = "photo-viewer.html#" + index;
 
@@ -336,6 +351,150 @@ function buildHeroMediaElement(media, altText) {
 
     a.appendChild(img);
     grid.appendChild(a);
+    return a;
+  });
+
+  if (!hasFlipUI) return;
+
+  let openIndex = -1;
+  let isAnimating = false;
+  let runningAnimations = [];
+
+  function crossfadeText(el, text) {
+    if (reduceMotion) {
+      el.textContent = text;
+      return;
+    }
+    el.animate([{ opacity: 1 }, { opacity: 0.3 }], { duration: 100, easing: "ease-in-out" }).onfinish = () => {
+      el.textContent = text;
+      el.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 100, easing: "ease-in-out" });
+    };
+  }
+
+  function updateCaption(index) {
+    const photo = photos[index];
+    crossfadeText(headingEl, photo.heading || "");
+    crossfadeText(subheadingEl, photo.subheading || "");
+    if (counterEl) counterEl.textContent = (index + 1) + "/" + photos.length;
+  }
+
+  function openPhoto(index) {
+    if (isAnimating || openIndex !== -1) return;
+    isAnimating = true;
+    openIndex = index;
+
+    const cell = cells[index];
+    const firstRect = cell.getBoundingClientRect();
+    const ratio = firstRect.width / firstRect.height;
+
+    document.documentElement.classList.add("photo-scroll-locked");
+    document.body.classList.add("photo-viewer-active");
+    // Hidden (not removed) so the grid keeps this cell's slot and every
+    // other cell's position never shifts under it.
+    cell.style.visibility = "hidden";
+
+    flipImage.src = photos[index].url;
+    flipImage.alt = photos[index].heading || "";
+    flipImage.style.top = firstRect.top + "px";
+    flipImage.style.left = firstRect.left + "px";
+    flipImage.style.width = firstRect.width + "px";
+    flipImage.style.height = firstRect.height + "px";
+    viewer.classList.add("is-active");
+
+    const maxW = Math.min(window.innerWidth * 0.86, 900);
+    const maxH = Math.min(window.innerHeight * 0.82, 900);
+    let lastW = maxW;
+    let lastH = lastW / ratio;
+    if (lastH > maxH) {
+      lastH = maxH;
+      lastW = lastH * ratio;
+    }
+    const lastTop = (window.innerHeight - lastH) / 2;
+    const lastLeft = (window.innerWidth - lastW) / 2;
+
+    if (reduceMotion) {
+      flipImage.style.top = lastTop + "px";
+      flipImage.style.left = lastLeft + "px";
+      flipImage.style.width = lastW + "px";
+      flipImage.style.height = lastH + "px";
+      viewer.classList.add("is-open");
+      updateCaption(index);
+      isAnimating = false;
+      return;
+    }
+
+    const vh = window.innerHeight;
+    const animations = [
+      flipImage.animate(
+        [
+          { top: firstRect.top + "px", left: firstRect.left + "px", width: firstRect.width + "px", height: firstRect.height + "px" },
+          { top: lastTop + "px", left: lastLeft + "px", width: lastW + "px", height: lastH + "px" }
+        ],
+        { duration: DURATION, easing: EASING, fill: "forwards" }
+      )
+    ];
+
+    // Every other cell physically travels off-screen toward whichever
+    // edge it already sits closer to - no fades, no crop changes.
+    cells.forEach((otherCell, i) => {
+      if (i === index) return;
+      const rect = otherCell.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const distance = vh + rect.height + 200;
+      const ty = center < vh / 2 ? -distance : distance;
+      animations.push(
+        otherCell.animate(
+          [{ transform: "translate(0, 0)" }, { transform: "translate(0, " + ty + "px)" }],
+          { duration: DURATION, easing: EASING, fill: "forwards" }
+        )
+      );
+    });
+
+    runningAnimations = animations;
+    Promise.allSettled(animations.map((a) => a.finished)).then(() => {
+      isAnimating = false;
+      viewer.classList.add("is-open");
+      updateCaption(index);
+    });
+  }
+
+  function closePhoto() {
+    if (isAnimating || openIndex === -1) return;
+    isAnimating = true;
+    const index = openIndex;
+    const cell = cells[index];
+
+    viewer.classList.remove("is-open");
+
+    function finish() {
+      cell.style.visibility = "";
+      viewer.classList.remove("is-active");
+      flipImage.removeAttribute("style");
+      document.documentElement.classList.remove("photo-scroll-locked");
+      document.body.classList.remove("photo-viewer-active");
+      openIndex = -1;
+      isAnimating = false;
+    }
+
+    if (reduceMotion || !runningAnimations.length) {
+      finish();
+      return;
+    }
+
+    runningAnimations.forEach((a) => a.reverse());
+    Promise.allSettled(runningAnimations.map((a) => a.finished)).then(finish);
+  }
+
+  cells.forEach((cell, index) => {
+    cell.addEventListener("click", (e) => {
+      e.preventDefault();
+      openPhoto(index);
+    });
+  });
+
+  closeBtn.addEventListener("click", closePhoto);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closePhoto();
   });
 })();
 

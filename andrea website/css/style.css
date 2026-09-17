@@ -362,6 +362,13 @@ body.page-photography .counter {
   color: #fff;
 }
 
+/* The flip viewer's own caption/close/counter stand in for these while a
+   photo is enlarged, so the normal chrome would otherwise overlap them. */
+body.page-photography.photo-viewer-active .site-header,
+body.page-photography.photo-viewer-active .site-footer {
+  display: none;
+}
+
 /* Desktop: a fixed 8-column grid - every cell shares the same portrait
    aspect ratio regardless of the source photo's own orientation, cropped
    to fit via object-fit: cover, so 16 photos fill exactly two full rows
@@ -384,6 +391,58 @@ body.page-photography .counter {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Grid-to-single-photo FLIP transition (photography.html). Clicking a grid
+   cell hides that cell (visibility only, so its neighbours never reflow)
+   and grows a clone of its image, in place, to a centered enlarged size at
+   the same aspect ratio - no crop change, so nothing distorts mid-flight.
+   Every other cell physically flies off toward the nearest screen edge. */
+
+.photo-flip-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.photo-flip-image {
+  position: fixed;
+  display: none;
+  object-fit: cover;
+  margin: 0;
+  pointer-events: none;
+}
+
+.photo-flip-viewer.is-active .photo-flip-image {
+  display: block;
+}
+
+.photo-flip-viewer .photo-caption,
+.photo-flip-viewer .photo-counter {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.photo-flip-viewer.is-open .photo-caption,
+.photo-flip-viewer.is-open .photo-counter {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.photo-flip-viewer .photo-close {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+html.photo-scroll-locked,
+html.photo-scroll-locked body {
+  overflow: hidden;
 }
 
 /* Single-photo viewer - reached from Photography's "Index" link. Desktop:
@@ -586,76 +645,48 @@ body.page-info .site-header {
     max-height: min(38vh, 420px);
   }
 
-  body.page-photo-viewer {
-    overflow: visible;
-  }
-
-  body.page-photo-viewer .site-header {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 20;
-    background: transparent;
-    color: #fff;
-  }
-
-  body.page-photo-viewer .site-name {
-    color: #fff;
-  }
+  /* Mobile single-photo viewer keeps the same letterboxed, contained
+     image as desktop (never full-bleed) - just with the counter and
+     caption swapped top/bottom to match the mobile reference. */
 
   .photo-caption {
-    top: auto;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.55);
+    justify-content: flex-end;
+    background: none;
   }
 
-  .photo-caption .photo-close {
-    display: none;
+  .photo-caption-text {
+    position: fixed;
+    top: auto;
+    bottom: 22px;
+    left: var(--header-footer-pad);
+    right: var(--header-footer-pad);
   }
 
   .photo-counter {
-    display: none;
-  }
-
-  .photo-slides {
-    position: static;
-    overflow: visible;
-    scroll-snap-type: none;
-  }
-
-  .photo-slide {
-    height: auto;
-    width: 100%;
-    padding: 0;
-    display: block;
+    top: 22px;
+    bottom: auto;
   }
 
   .photo-slide img {
-    max-width: 100%;
-    max-height: none;
-    width: 100%;
-    height: auto;
-    object-fit: initial;
+    max-width: min(86vw, 600px);
+    max-height: min(70vh, 700px);
   }
 
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    row-gap: 8rem;
-    column-gap: 1.5rem;
+    gap: 4px;
     background: #000;
-    padding: calc(var(--bar-height) + 3rem) 2rem 3rem;
+    padding: var(--bar-height) 0 0;
   }
 
   .photo-grid a {
     height: auto;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 7 / 8;
   }
 
   .photo-grid img {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 7 / 8;
     object-fit: cover;
   }
 
