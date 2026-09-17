@@ -281,7 +281,19 @@ function buildThumbnailElement(media, altText) {
       outtakes.forEach((item) => {
         const cell = document.createElement("div");
         cell.className = "project-outtake";
-        cell.appendChild(buildThumbnailElement(item, project.name));
+        if (item.orientation === "landscape" || item.orientation === "square") {
+          cell.classList.add("project-outtake--" + item.orientation);
+        }
+        const media = buildThumbnailElement(item, project.name);
+        cell.appendChild(media);
+        // Video outtakes preview muted on hover, same as the Index grid.
+        if (media.tagName === "VIDEO") {
+          cell.addEventListener("mouseenter", () => media.play().catch(() => {}));
+          cell.addEventListener("mouseleave", () => {
+            media.pause();
+            media.currentTime = 0.1;
+          });
+        }
         outtakesTrack.appendChild(cell);
       });
       outtakesWrap.hidden = false;

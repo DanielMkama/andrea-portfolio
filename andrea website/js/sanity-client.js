@@ -34,8 +34,14 @@ window.loadProjects = (function () {
       }
     },
     outtakes[] {
-      "url": asset->url,
-      "alt": title
+      _type,
+      orientation,
+      _type == "outtakeImage" => {
+        "url": image.asset->url
+      },
+      _type == "outtakeVideo" => {
+        "url": video.asset->url
+      }
     }
   }`;
 
@@ -118,7 +124,12 @@ window.loadProjects = (function () {
         .filter(Boolean),
       outtakes: (doc.outtakes || [])
         .filter((item) => item.url)
-        .map((item) => ({ type: "image", src: item.url, alt: item.alt || doc.title }))
+        .map((item) => ({
+          type: item._type === "outtakeVideo" ? "video" : "image",
+          src: item.url,
+          orientation: item.orientation || "portrait",
+          alt: doc.title
+        }))
     }));
   }
 

@@ -259,10 +259,14 @@ body.has-slides {
    media's own intrinsic dimensions) means the hero always reserves a
    correct full-width box immediately - regardless of whether the video is
    still loading, slow, or fails outright, none of which should collapse
-   or distort the layout. */
+   or distort the layout. The max-height caps it below the fixed header
+   and footer bars - without this, a full-width 16:9 box is often taller
+   than the viewport, so the fixed footer (opaque, always glued to the
+   bottom) would sit on top of the video's own lower edge. */
 .project-block {
   width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: calc(100vh - var(--bar-height) * 2 - 74px);
   line-height: 0;
   position: relative;
   background: #000;
@@ -383,6 +387,14 @@ body.has-slides {
   aspect-ratio: 2 / 3;
   background: #f2f2f2;
   overflow: hidden;
+}
+
+.project-outtake--landscape {
+  aspect-ratio: 3 / 2;
+}
+
+.project-outtake--square {
+  aspect-ratio: 1 / 1;
 }
 
 .project-outtake img,
