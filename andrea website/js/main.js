@@ -110,8 +110,11 @@ function buildThumbnailElement(media, altText) {
     section.dataset.index = String(index);
 
     const mediaWrap = document.createElement("div");
-    mediaWrap.className = "slide-media";
+    mediaWrap.className = "slide-media slide-media-clickable";
     mediaWrap.appendChild(buildMediaElement(slide.media, slide.project.name));
+    mediaWrap.addEventListener("click", () => {
+      window.location.href = "project.html?slug=" + encodeURIComponent(slide.project.slug);
+    });
 
     section.appendChild(mediaWrap);
     track.appendChild(section);
@@ -192,3 +195,117 @@ function buildThumbnailElement(media, altText) {
     grid.appendChild(li);
   });
 })();
+
+// Project page - the case-study page a home-slider click lands on.
+// Shows one media item large ("hero", click-to-play if it's a video) plus
+// the rest of the project's media as a thumbnail row that swaps the hero;
+// below that, the description, Andrea's role, and everyone else's credits.
+(async function () {
+  const heading = document.getElementById("projectHeading");
+  const heroWrap = document.getElementById("projectHero");
+  if (!heading || !heroWrap || typeof window.loadProjects !== "function") return;
+
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  const projects = await window.loadProjects();
+  const project = projects.find((p) => p.slug === slug) || projects[0];
+  if (!project) return;
+
+  document.title = project.name + " - Andrea";
+  heading.textContent = project.name;
+
+  const media = project.media || [];
+
+  function renderHero(item) {
+    heroWrap.innerHTML = "";
+    heroWrap.appendChild(buildHeroMediaElement(item, project.name));
+  }
+
+  renderHero(media[0]);
+
+  const thumbsWrap = document.getElementById("projectThumbs");
+  if (thumbsWrap && media.length > 1) {
+    media.slice(1).forEach((item) => {
+      const button = document.createElement("button");
+      button.className = "project-thumb";
+      button.setAttribute("aria-label", "Show this media");
+      button.appendChild(buildThumbnailElement(item, project.name));
+      button.addEventListener("click", () => renderHero(item));
+      thumbsWrap.appendChild(button);
+    });
+  }
+
+  const descriptionEl = document.getElementById("projectDescription");
+  if (descriptionEl) {
+    if (project.description) {
+      descriptionEl.textContent = project.description;
+    } else {
+      descriptionEl.remove();
+    }
+  }
+
+  const roleEl = document.getElementById("projectRole");
+  if (roleEl) {
+    if (project.role) {
+      roleEl.textContent = project.role;
+    } else {
+      roleEl.remove();
+    }
+  }
+
+  const creditsEl = document.getElementById("projectCredits");
+  if (creditsEl) {
+    const credits = project.credits || [];
+    if (credits.length) {
+      creditsEl.textContent = credits.map((c) => `${c.role}: ${c.name}`).join(", ");
+    } else {
+      creditsEl.remove();
+    }
+  }
+})();
+
+// Hero media for the project page. Images/embeds render plainly; an
+// uploaded video file starts paused behind a big click-to-play button,
+// then hands off to native controls once playing.
+function buildHeroMediaElement(media, altText) {
+  if (!media) return document.createElement("div");
+
+  if (media.type !== "video") {
+    const block = document.createElement("div");
+    block.className = "project-block";
+    block.appendChild(buildMediaElement(media, altText));
+    return block;
+  }
+
+  const block = document.createElement("div");
+  block.className = "project-block project-video-block";
+
+  const video = document.createElement("video");
+  video.src = media.src;
+  if (media.poster) video.poster = media.poster;
+  video.playsInline = true;
+  video.setAttribute("aria-label", altText);
+
+  const playButton = document.createElement("button");
+  playButton.className = "project-play";
+  playButton.setAttribute("aria-label", "Play video");
+  playButton.innerHTML = '<svg viewBox="0 0 24 24" width="64" height="64"><path d="M8 5v14l11-7z" fill="white"/></svg>';
+
+  playButton.addEventListener("click", () => {
+    video.controls = true;
+    video.play().catch(() => {});
+  });
+
+  video.addEventListener("play", () => {
+    playButton.style.display = "none";
+  });
+
+  video.addEventListener("pause", () => {
+    if (!video.ended) playButton.style.display = "";
+  });
+
+  block.appendChild(video);
+  block.appendChild(playButton);
+  return block;
+}

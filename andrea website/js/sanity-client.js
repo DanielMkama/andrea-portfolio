@@ -16,6 +16,9 @@ window.loadProjects = (function () {
     title,
     "slug": slug.current,
     order,
+    description,
+    role,
+    credits[]{ role, name },
     media[] {
       _type,
       _type == "image" => {
@@ -101,6 +104,9 @@ window.loadProjects = (function () {
       id: doc._id,
       name: doc.title,
       slug: doc.slug,
+      description: doc.description || "",
+      role: doc.role || "",
+      credits: doc.credits || [],
       media: (doc.media || [])
         .map((item) => mapMedia(item, doc.title))
         .filter(Boolean)

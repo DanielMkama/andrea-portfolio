@@ -179,6 +179,17 @@ body.has-slides {
   display: block;
 }
 
+.slide-media-clickable {
+  cursor: pointer;
+}
+
+/* Embeds are their own document, so clicks land on their iframe rather
+   than bubbling to the slide-media click handler above - let the click
+   pass through to the wrapper instead, matching image/video slides. */
+.slide-media-clickable iframe {
+  pointer-events: none;
+}
+
 /* Archive (Index) page - thumbnail grid */
 
 .archive {
@@ -210,6 +221,111 @@ body.has-slides {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Project page - case study reached by clicking a home-slider slide */
+
+.project-page {
+  flex: 1;
+  padding-top: calc(var(--bar-height) + var(--accent-bar-height) + 32px);
+  padding-bottom: calc(var(--bar-height) + 40px);
+}
+
+.project-heading-wrap {
+  padding: 0 var(--header-footer-pad);
+  margin-bottom: 24px;
+}
+
+.project-heading {
+  margin: 0;
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.project-hero {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.project-block {
+  width: 100%;
+  line-height: 0;
+  position: relative;
+}
+
+.project-block img,
+.project-block video,
+.project-block iframe {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 0;
+}
+
+.project-block iframe {
+  aspect-ratio: 16 / 9;
+}
+
+.project-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
+
+.project-thumbs {
+  display: flex;
+  gap: 8px;
+  padding: 0 var(--header-footer-pad);
+  margin-bottom: 32px;
+}
+
+.project-thumb {
+  width: 96px;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: 0;
+  background: #f2f2f2;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.project-thumb img,
+.project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-info {
+  padding: 0 var(--header-footer-pad);
+  max-width: 640px;
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.project-info p {
+  margin: 0 0 20px;
+}
+
+.project-info p:empty {
+  display: none;
+}
+
+.project-role {
+  color: var(--muted);
 }
 
 /* Info page - full-bleed color, no scroll, serif bio */
@@ -249,6 +365,19 @@ body.page-info .site-header {
 
 .info-bio p:last-child {
   margin-bottom: 0;
+}
+
+/* Mobile-only - see the mobile media query below for sizing/visibility */
+.info-photo-strip {
+  display: none;
+}
+
+.info-photo-strip img {
+  flex: 1 1 0;
+  width: 0;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .info-footer {
@@ -307,12 +436,20 @@ body.page-info .site-header {
   }
 
   .info-bio {
-    font-size: 13px;
-    line-height: 1.45;
+    font-size: 19px;
+    line-height: 26px;
   }
 
   .info-bio p {
     margin-bottom: 14px;
+  }
+
+  .info-photo-strip {
+    display: flex;
+    gap: 3px;
+    background: #000;
+    width: 100%;
+    aspect-ratio: 3.5 / 1;
   }
 
   .info-footer {
@@ -322,5 +459,24 @@ body.page-info .site-header {
 
   .info-clients {
     flex-basis: 100%;
+  }
+
+  /* Content (bio + photo strip + full client list) can be taller than a
+     small phone's viewport. The shared `html, body { height: 100% }` rule
+     above pins body to exactly one viewport tall, so overflow:hidden was
+     clipping anything past that regardless of min-height. Switching to
+     height: auto removes the fixed box entirely - body genuinely grows
+     with its content, min-height keeps it filling the screen when content
+     is short (pushing the footer down, the gap in the reference shot),
+     and it scrolls normally rather than clipping when content is tall. */
+  body.page-info {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .info-main {
+    min-height: auto;
+    overflow: visible;
   }
 }
