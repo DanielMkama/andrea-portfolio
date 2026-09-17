@@ -809,6 +809,12 @@ body.page-info .site-name {
   color: #fff;
 }
 
+.info-book-call {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .info-email-wrap {
   position: relative;
   display: inline-block;
