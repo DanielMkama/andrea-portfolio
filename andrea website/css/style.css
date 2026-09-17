@@ -643,17 +643,20 @@ body.page-info .site-header {
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    padding: var(--bar-height) 0;
+    row-gap: 8rem;
+    column-gap: 1.5rem;
+    background: #000;
+    padding: calc(var(--bar-height) + 3rem) 2rem 3rem;
   }
 
   .photo-grid a {
     height: auto;
-    aspect-ratio: 7 / 8;
+    aspect-ratio: 1 / 1;
   }
 
   .photo-grid img {
-    aspect-ratio: 7 / 8;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
   }
 
   .archive-grid {
