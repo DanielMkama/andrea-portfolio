@@ -403,7 +403,7 @@ function buildHeroMediaElement(media, altText) {
 
 // Info page background - a blurred grid built from the site's own
 // photography images (real Sanity photos when configured, demo photos
-// otherwise), repeated to fill the grid if there are fewer than 18.
+// otherwise), repeated to fill the grid if there are fewer than 10.
 (async function () {
   const bg = document.getElementById("infoBg");
   if (!bg || typeof window.loadPhotos !== "function") return;
@@ -443,6 +443,34 @@ function buildHeroMediaElement(media, altText) {
       }, 1500);
     }).catch(() => {});
   });
+})();
+
+// Info page local time - a live clock for Arusha, Tanzania (East Africa
+// Time), formatted like "7:07pm".
+(function () {
+  const el = document.getElementById("infoTime");
+  if (!el) return;
+
+  function update() {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Africa/Dar_es_Salaam",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    }).formatToParts(new Date());
+
+    let hour = "", minute = "", period = "";
+    parts.forEach((p) => {
+      if (p.type === "hour") hour = p.value;
+      if (p.type === "minute") minute = p.value;
+      if (p.type === "dayPeriod") period = p.value.toLowerCase();
+    });
+
+    el.textContent = `${hour}:${minute}${period}`;
+  }
+
+  update();
+  setInterval(update, 30000);
 })();
 
 // Photography page - a flat grid of standalone photos. Clicking one plays
