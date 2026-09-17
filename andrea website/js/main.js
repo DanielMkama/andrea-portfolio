@@ -1,10 +1,12 @@
-// Flattens a projects list into one continuous sequence of slides.
+// Builds one slide per project, using only its first media item. The rest
+// of a project's media (up to 7 more) are swap-in thumbnails on that
+// project's own page only - they're not separate slides here, so adding
+// them doesn't inflate the home slider or the Index grid.
 function buildSlides(projects) {
   const slides = [];
   projects.forEach((project, projectIndex) => {
-    (project.media || []).forEach((media) => {
-      slides.push({ project, projectIndex, media });
-    });
+    const media = (project.media || [])[0];
+    if (media) slides.push({ project, projectIndex, media });
   });
   return slides;
 }
@@ -619,13 +621,16 @@ function buildHeroMediaElement(media, altText) {
     const cell = cells[index];
 
     viewer.classList.remove("is-open");
+    // The header/footer don't need to wait for the flip-back animation to
+    // finish - restoring them immediately is what makes the nav feel snappy
+    // instead of stuck behind the ~600ms close animation.
+    document.body.classList.remove("photo-viewer-active");
 
     function finish() {
       cell.style.visibility = "";
       viewer.classList.remove("is-active");
       flipImage.removeAttribute("style");
       document.documentElement.classList.remove("photo-scroll-locked");
-      document.body.classList.remove("photo-viewer-active");
       openIndex = -1;
       isAnimating = false;
     }
