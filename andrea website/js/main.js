@@ -325,11 +325,70 @@ function buildHeroMediaElement(media, altText) {
   if (!grid || typeof window.loadPhotos !== "function") return;
 
   const photos = await window.loadPhotos();
-  photos.forEach((src) => {
+  photos.forEach((photo, index) => {
+    const a = document.createElement("a");
+    a.href = "photo-viewer.html#" + index;
+
     const img = document.createElement("img");
-    img.src = src;
-    img.alt = "";
+    img.src = photo.url;
+    img.alt = photo.heading || "";
     img.loading = "lazy";
-    grid.appendChild(img);
+
+    a.appendChild(img);
+    grid.appendChild(a);
   });
+})();
+
+// Single-photo viewer - reached from the Photography grid's "Index" link.
+// Desktop scroll-snaps between photos; mobile is a plain stacked scroll
+// (see the CSS). Either way, a fixed caption shows whichever photo is
+// currently in view, tracked the same way the home slider tracks slides.
+(async function () {
+  const track = document.getElementById("photoSlides");
+  if (!track || typeof window.loadPhotos !== "function") return;
+
+  const photos = await window.loadPhotos();
+  if (!photos.length) return;
+
+  const headingEl = document.getElementById("photoHeading");
+  const subheadingEl = document.getElementById("photoSubheading");
+
+  const sections = photos.map((photo, index) => {
+    const section = document.createElement("section");
+    section.className = "photo-slide";
+    section.dataset.index = String(index);
+
+    const img = document.createElement("img");
+    img.src = photo.url;
+    img.alt = photo.heading || "";
+
+    section.appendChild(img);
+    track.appendChild(section);
+    return section;
+  });
+
+  function updateCaption(index) {
+    const photo = photos[index];
+    headingEl.textContent = photo.heading || "";
+    subheadingEl.textContent = photo.subheading || "";
+    history.replaceState(null, "", "#" + index);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+        updateCaption(Number(entry.target.dataset.index));
+      }
+    });
+  }, { threshold: [0.6] });
+
+  sections.forEach((section) => observer.observe(section));
+
+  let startIndex = 0;
+  const hashIndex = parseInt(window.location.hash.replace("#", ""), 10);
+  if (!isNaN(hashIndex) && hashIndex >= 0 && hashIndex < photos.length) {
+    startIndex = hashIndex;
+  }
+  sections[startIndex].scrollIntoView({ block: "start" });
+  updateCaption(startIndex);
 })();

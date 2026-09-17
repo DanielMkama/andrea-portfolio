@@ -136,7 +136,9 @@ window.loadPhotos = (function () {
 
   const QUERY = `*[_type == "photo"] | order(order asc) {
     _id,
-    "url": image.asset->url
+    "url": image.asset->url,
+    heading,
+    subheading
   }`;
 
   async function fetchFromSanity() {
@@ -144,7 +146,13 @@ window.loadPhotos = (function () {
     const res = await fetch(url);
     if (!res.ok) throw new Error("Sanity request failed: " + res.status);
     const json = await res.json();
-    return (json.result || []).filter((doc) => doc.url).map((doc) => doc.url);
+    return (json.result || [])
+      .filter((doc) => doc.url)
+      .map((doc) => ({
+        url: doc.url,
+        heading: doc.heading || "",
+        subheading: doc.subheading || ""
+      }));
   }
 
   return async function loadPhotos() {

@@ -67,23 +67,25 @@ window.FALLBACK_PROJECTS = [
   }
 ];
 
-// Demo photos for the Photography page - mixed landscape/portrait aspect
-// ratios so the justified grid lays out realistically.
+// Demo photos for the Photography page - kept close to square/mildly
+// landscape (roughly 0.85-1.3 aspect ratio) so a shared row height packs
+// about 8 per row on a typical desktop width, matching the reference grid.
+// Each also carries a heading/subheading pair for the single-photo viewer.
 window.FALLBACK_PHOTOS = [
-  "https://picsum.photos/seed/photo01/1200/800",
-  "https://picsum.photos/seed/photo02/900/1200",
-  "https://picsum.photos/seed/photo03/1200/900",
-  "https://picsum.photos/seed/photo04/1000/1300",
-  "https://picsum.photos/seed/photo05/1300/900",
-  "https://picsum.photos/seed/photo06/950/1250",
-  "https://picsum.photos/seed/photo07/1200/850",
-  "https://picsum.photos/seed/photo08/1100/1400",
-  "https://picsum.photos/seed/photo09/1250/900",
-  "https://picsum.photos/seed/photo10/900/1150",
-  "https://picsum.photos/seed/photo11/1300/950",
-  "https://picsum.photos/seed/photo12/1000/1300",
-  "https://picsum.photos/seed/photo13/1200/800",
-  "https://picsum.photos/seed/photo14/950/1250",
-  "https://picsum.photos/seed/photo15/1250/900",
-  "https://picsum.photos/seed/photo16/1000/1300"
+  { url: "https://picsum.photos/seed/photo01/1050/900", heading: "Studio Visit", subheading: "Working Objects" },
+  { url: "https://picsum.photos/seed/photo02/950/1000", heading: "Studio Visit", subheading: "Working Objects" },
+  { url: "https://picsum.photos/seed/photo03/1100/850", heading: "Studio Visit", subheading: "Working Objects" },
+  { url: "https://picsum.photos/seed/photo04/900/950", heading: "Coastal Light", subheading: "Morning Series" },
+  { url: "https://picsum.photos/seed/photo05/1000/900", heading: "Coastal Light", subheading: "Morning Series" },
+  { url: "https://picsum.photos/seed/photo06/1150/900", heading: "Coastal Light", subheading: "Morning Series" },
+  { url: "https://picsum.photos/seed/photo07/1300/900", heading: "Field Notes", subheading: "Personal Work" },
+  { url: "https://picsum.photos/seed/photo08/950/1050", heading: "Field Notes", subheading: "Personal Work" },
+  { url: "https://picsum.photos/seed/photo09/1000/850", heading: "Field Notes", subheading: "Personal Work" },
+  { url: "https://picsum.photos/seed/photo10/1100/950", heading: "Interiors", subheading: "Quiet Spaces" },
+  { url: "https://picsum.photos/seed/photo11/900/1000", heading: "Interiors", subheading: "Quiet Spaces" },
+  { url: "https://picsum.photos/seed/photo12/1200/900", heading: "Interiors", subheading: "Quiet Spaces" },
+  { url: "https://picsum.photos/seed/photo13/1050/950", heading: "On Location", subheading: "Behind the Scenes" },
+  { url: "https://picsum.photos/seed/photo14/950/900", heading: "On Location", subheading: "Behind the Scenes" },
+  { url: "https://picsum.photos/seed/photo15/1250/900", heading: "On Location", subheading: "Behind the Scenes" },
+  { url: "https://picsum.photos/seed/photo16/1000/1000", heading: "On Location", subheading: "Behind the Scenes" }
 ];
