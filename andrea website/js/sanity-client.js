@@ -107,7 +107,7 @@ window.loadProjects = (function () {
 
   async function fetchFromSanity() {
     const url = `https://${config.projectId}.api.sanity.io/v${config.apiVersion || "2024-01-01"}/data/query/${config.dataset || "production"}?query=${encodeURIComponent(QUERY)}`;
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("Sanity request failed: " + res.status);
     const json = await res.json();
 
@@ -161,7 +161,7 @@ window.loadPhotos = (function () {
 
   async function fetchFromSanity() {
     const url = `https://${config.projectId}.api.sanity.io/v${config.apiVersion || "2024-01-01"}/data/query/${config.dataset || "production"}?query=${encodeURIComponent(QUERY)}`;
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error("Sanity request failed: " + res.status);
     const json = await res.json();
     return (json.result || [])
