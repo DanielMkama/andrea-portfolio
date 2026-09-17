@@ -850,6 +850,51 @@ body.page-info .site-name {
   text-underline-offset: 3px;
 }
 
+/* Info overlay - shown on top of whatever page the visitor is currently on
+   (home slide, photography grid, project video, index grid), live-blurring
+   that page's own content via backdrop-filter instead of a fixed image.
+   The site header sits above it (z-index 20 from .fixed-chrome) so the
+   Info link stays clickable and doubles as the close control. */
+.info-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  backdrop-filter: blur(40px) brightness(0.6);
+  -webkit-backdrop-filter: blur(40px) brightness(0.6);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.info-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.info-overlay-inner {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 211px;
+}
+
+.info-overlay-footer {
+  flex-shrink: 0;
+  padding: 22px 211px 32px;
+  font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: #fff;
+}
+
 /* Mobile */
 
 @media (max-width: 640px) {
@@ -968,6 +1013,23 @@ body.page-info .site-name {
   }
 
   .info-footer {
+    flex-shrink: 0;
+    padding: 12px 16px 32px;
+  }
+
+  .info-overlay {
+    overflow-y: auto;
+  }
+
+  .info-overlay-inner {
+    flex: 0 1 auto;
+    overflow: visible;
+    justify-content: flex-start;
+    padding: 96px 16px 0;
+    gap: 16px;
+  }
+
+  .info-overlay-footer {
     flex-shrink: 0;
     padding: 12px 16px 32px;
   }

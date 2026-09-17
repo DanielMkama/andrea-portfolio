@@ -473,6 +473,37 @@ function buildHeroMediaElement(media, altText) {
   setInterval(update, 30000);
 })();
 
+// Info overlay - the "Info" nav link toggles a full-screen overlay on top
+// of whatever page it's clicked from, instead of navigating to a separate
+// page. Its backdrop-filter blurs that page's own current content live
+// (a slide, a photo grid, a project video), so the background is never a
+// fixed image and always matches whatever the visitor was just looking at.
+// The link itself doubles as the close control, swapping its label.
+(function () {
+  const overlay = document.getElementById("infoOverlay");
+  const link = document.querySelector(".info-link[data-info-open]");
+  if (!overlay || !link) return;
+
+  const originalLabel = link.textContent;
+  let isOpen = false;
+
+  function setOpen(next) {
+    isOpen = next;
+    overlay.classList.toggle("is-open", isOpen);
+    overlay.setAttribute("aria-hidden", String(!isOpen));
+    link.textContent = isOpen ? "Close" : originalLabel;
+  }
+
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    setOpen(!isOpen);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen) setOpen(false);
+  });
+})();
+
 // Photography page - a flat grid of standalone photos. Clicking one plays
 // a FLIP transition into an enlarged, centered view of that same photo
 // (see the CSS for .photo-flip-viewer) instead of navigating away.
