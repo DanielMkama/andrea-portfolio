@@ -476,7 +476,11 @@ body.has-slides {
   }
 
   body.hero-playing .project-block {
-    height: 550px;
+    /* Fills all the way down to the fixed footer (minus the hero's own
+       14px bottom padding) instead of a fixed height, which left a white
+       gap above the footer on any viewport taller than that fixed size. */
+    height: calc(100vh - var(--bar-height) * 2 - 102px);
+    min-height: 500px;
     max-height: none;
   }
 }
@@ -739,7 +743,7 @@ body.page-info .site-header {
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  padding: 22px var(--header-footer-pad);
+  padding: 22px var(--header-footer-pad) 32px;
   font-family: 'Untitled Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 13px;
