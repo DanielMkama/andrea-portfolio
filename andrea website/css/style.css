@@ -453,35 +453,30 @@ body.has-slides {
   display: block;
 }
 
-/* Desktop: the hero video is never shorter than 500px, even on a narrow
-   or short window where a plain 16:9 box would otherwise come out small. */
+/* Desktop: the hero video always keeps this same large, wide footprint -
+   whether it's playing or paused, has ever been clicked or not. It fills
+   down to just above the fixed footer (minus the hero's own 14px padding)
+   with a 500px floor for short windows, same in every state. */
 @media (min-width: 641px) {
-  .project-block {
-    min-height: 500px;
-  }
-}
-
-/* Desktop "cinema mode" - once a hero video is playing, it takes over
-   the space the description/credits used instead of staying pinned to
-   its idle 16:9 box, so there's more room to actually watch it. */
-@media (min-width: 641px) {
-  body.hero-playing .project-info,
-  body.hero-playing .project-thumbs {
-    display: none;
-  }
-
-  body.hero-playing .project-hero {
+  .project-hero {
     padding: 14px;
     margin-bottom: 0;
   }
 
-  body.hero-playing .project-block {
-    /* Fills all the way down to the fixed footer (minus the hero's own
-       14px bottom padding) instead of a fixed height, which left a white
-       gap above the footer on any viewport taller than that fixed size. */
+  .project-block {
     height: calc(100vh - var(--bar-height) * 2 - 102px);
     min-height: 500px;
     max-height: none;
+  }
+}
+
+/* Desktop "cinema mode" - once a hero video is playing, the description
+   and credits below it hide so there's nothing to scroll past to keep
+   watching (the video itself no longer changes size for this). */
+@media (min-width: 641px) {
+  body.hero-playing .project-info,
+  body.hero-playing .project-thumbs {
+    display: none;
   }
 }
 
@@ -695,7 +690,7 @@ body.page-photo-viewer .site-header {
 /* Info page - full-bleed color, no scroll, serif bio */
 
 body.page-info {
-  background: #e2503a;
+  background: #111;
   overflow: hidden;
   /* dvh tracks the real, currently-visible viewport - unlike the static
      height:100% inherited above, it shrinks when a phone's address bar is
@@ -704,8 +699,41 @@ body.page-info {
   height: 100dvh;
 }
 
+/* A heavily blurred grid of the site's own project photos, dimmed with a
+   dark overlay - sits behind everything else via the negative z-index. */
+.info-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  overflow: hidden;
+}
+
+.info-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: blur(20px) brightness(0.55);
+  transform: scale(1.2);
+}
+
+.info-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
 body.page-info .site-header {
   background: transparent;
+  color: #fff;
+}
+
+body.page-info .site-name {
+  color: #fff;
 }
 
 .info-main {
@@ -725,7 +753,7 @@ body.page-info .site-header {
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: rgb(0, 0, 0);
+  color: #fff;
 }
 
 .info-bio p {
@@ -748,7 +776,7 @@ body.page-info .site-header {
   font-weight: 400;
   font-size: 13px;
   line-height: 18px;
-  color: rgb(0, 0, 0);
+  color: #fff;
 }
 
 .info-clients {

@@ -118,20 +118,3 @@ window.FALLBACK_PHOTOS = [
   { url: "https://picsum.photos/seed/photo15/800/1200", heading: "On Location", subheading: "Behind the Scenes" },
   { url: "https://picsum.photos/seed/photo16/800/1200", heading: "On Location", subheading: "Behind the Scenes" }
 ];
-
-window.FALLBACK_INFO = {
-  bio: [
-    {
-      _type: "block",
-      children: [
-        { _type: "span", text: "Andrea is a director and photographer working across fashion, sport, and lifestyle. He works to bridge commercial polish with raw, unguarded moments, drawn to pieces where a brand stops performing and starts feeling like something true.", marks: [] }
-      ]
-    },
-    {
-      _type: "block",
-      children: [
-        { _type: "span", text: "When he's not on set, Andrea is walking his dog or chasing the perfect shot of espresso.", marks: [] }
-      ]
-    }
-  ]
-};
