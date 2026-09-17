@@ -299,6 +299,8 @@ body.has-slides {
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
 }
 
+/* Desktop: every thumbnail (up to 7) shares the row evenly, so however
+   many there are, they always fill the full width with no scrolling. */
 .project-thumbs {
   display: flex;
   gap: 8px;
@@ -307,14 +309,15 @@ body.has-slides {
 }
 
 .project-thumb {
-  width: 96px;
+  flex: 1 1 0;
+  min-width: 0;
   aspect-ratio: 16 / 9;
   padding: 0;
   border: 0;
   background: #f2f2f2;
   overflow: hidden;
   cursor: pointer;
-  flex-shrink: 0;
+  position: relative;
 }
 
 .project-thumb img,
@@ -323,6 +326,16 @@ body.has-slides {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.project-thumb-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.45));
 }
 
 .project-info {
@@ -438,6 +451,14 @@ body.has-slides {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Desktop: the hero video is never shorter than 500px, even on a narrow
+   or short window where a plain 16:9 box would otherwise come out small. */
+@media (min-width: 641px) {
+  .project-block {
+    min-height: 500px;
+  }
 }
 
 /* Desktop "cinema mode" - once a hero video is playing, it takes over
@@ -747,6 +768,23 @@ body.page-info .site-header {
 
   .project-title {
     max-width: 45vw;
+  }
+
+  /* Mobile: 3 thumbnails fully visible, a sliver of the 4th showing to
+     hint there's more, scrolled horizontally to reach the rest. */
+  .project-thumbs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .project-thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-thumb {
+    flex: 0 0 auto;
+    width: calc((100% - 16px) / 3.3);
   }
 
   .project-outtake {

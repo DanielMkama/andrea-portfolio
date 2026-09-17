@@ -226,11 +226,17 @@ function buildThumbnailElement(media, altText) {
 
   const thumbsWrap = document.getElementById("projectThumbs");
   if (thumbsWrap && media.length > 1) {
-    media.slice(1).forEach((item) => {
+    media.slice(1, 8).forEach((item) => {
       const button = document.createElement("button");
       button.className = "project-thumb";
       button.setAttribute("aria-label", "Show this media");
       button.appendChild(buildThumbnailElement(item, project.name));
+      if (item.type === "video" || item.type === "embed") {
+        const icon = document.createElement("span");
+        icon.className = "project-thumb-play";
+        icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5v14l11-7z" fill="white"/></svg>';
+        button.appendChild(icon);
+      }
       button.addEventListener("click", () => renderHero(item));
       thumbsWrap.appendChild(button);
     });
@@ -381,14 +387,13 @@ function buildHeroMediaElement(media, altText) {
 
   video.addEventListener("play", () => {
     playButton.style.display = "none";
-    // On mobile, a playing hero video takes over the space the
-    // description/credits used, instead of staying pinned to its 16:9 box.
+    // Once played, the video keeps the larger cinema-mode layout even if
+    // it's later paused - pausing no longer reverts it back.
     document.body.classList.add("hero-playing");
   });
 
   video.addEventListener("pause", () => {
     playButton.style.display = "";
-    document.body.classList.remove("hero-playing");
   });
 
   block.appendChild(video);
