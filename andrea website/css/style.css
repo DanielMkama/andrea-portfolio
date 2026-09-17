@@ -813,10 +813,6 @@ body.page-info .site-name {
   text-underline-offset: 3px;
 }
 
-.info-book-wrap {
-  display: block;
-  margin-top: 12px;
-}
 
 .info-email-wrap {
   position: relative;
@@ -978,5 +974,10 @@ body.page-info .site-name {
   .info-footer {
     flex-shrink: 0;
     padding: 0 0 32px;
+  }
+
+  .info-book-wrap {
+    display: block;
+    margin-top: 12px;
   }
 }
